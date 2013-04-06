@@ -11,25 +11,30 @@ spl_autoload_register('autoload');
 /**
  * Get All Clients That Are Active
  */
+echo "Get All Clients\n";
 $GetClients = new Echo_GetClients();
-$results = $GetClients->all();
-var_dump($results);
+$response = $GetClients->all();
+$returnObj = json_decode($response);
+var_dump($returnObj);
 
 
 /**
  * Add A Client
  */
+ echo "\n\n\nAdd A Client\n";
 $AddClient = new Echo_AddClient();
 $AddClient->setName('New Awesome Client');
-$Response = $AddClient->execute();
-var_dump($Response);
+$response = $AddClient->execute();
+$returnObj = json_decode($response);
+var_dump($returnObj);
 
 /**
  * Add A List
  */
+  echo "\n\n\nAdd A List\n";
 $AddList = new Echo_AddList('New List From API', Echo_AddList::TYPE_TARGET, 13);
 $AddList->addNumber(5555555555);
 $AddList->addNumber(6666666666);
-$AddList->addNumber(2172571202);
 $response = $AddList->execute();
-var_dump($response);
+$returnObj = json_decode($response);
+var_dump($returnObj);

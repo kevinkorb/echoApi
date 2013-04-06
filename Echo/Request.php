@@ -14,7 +14,6 @@ class Echo_Request {
 	
 	public function execute(){
 		$ch = curl_init();
-		echo $this->getUrl();
 		curl_setopt($ch, CURLOPT_URL, $this->getUrl());
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, 'data=' . json_encode($this->params));
