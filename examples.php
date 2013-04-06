@@ -27,12 +27,13 @@ $AddClient->setName('New Awesome Client');
 $response = $AddClient->execute();
 $returnObj = json_decode($response);
 var_dump($returnObj);
+$ClientData = json_decode($returnObj->data);
 
 /**
  * Add A List
  */
   echo "\n\n\nAdd A List\n";
-$AddList = new Echo_AddList('New List From API', Echo_AddList::TYPE_TARGET, 13);
+$AddList = new Echo_AddList('New List From API', Echo_AddList::TYPE_TARGET, $ClientData->id);
 $AddList->addNumber(5555555555);
 $AddList->addNumber(6666666666);
 $response = $AddList->execute();
