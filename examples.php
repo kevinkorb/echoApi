@@ -18,12 +18,12 @@ $returnObj = json_decode($response);
 var_dump($returnObj);
 
 
+// die();
 /**
  * Add A Client
  */
  echo "\n\n\nAdd A Client\n";
-$AddClient = new Echo_AddClient();
-$AddClient->setName('New Awesome Client');
+$AddClient = new Echo_AddClient('New Awesome Client');
 $response = $AddClient->execute();
 $returnObj = json_decode($response);
 var_dump($returnObj);
@@ -37,5 +37,17 @@ $AddList = new Echo_AddList('New List From API', Echo_AddList::TYPE_TARGET, $Cli
 $AddList->addNumber(5555555555);
 $AddList->addNumber(6666666666);
 $response = $AddList->execute();
+
 $returnObj = json_decode($response);
 var_dump($returnObj);
+
+/**
+ * Create a new Broadcast Call
+ */
+ echo "\n\n\nAdd A New Call\n";
+ $AddCall = new Echo_AddBroadcastCall('Test call from API', $ClientData->id);
+ $AddCall->setCallTypeLiveVoiceAndAMSameMessage('recordings/chainsaw.wav');
+ $addCallResponse = $AddCall->execute();
+ $AddCallJson = json_decode($addCallResponse);
+ print_r($AddCallJson);
+ 
