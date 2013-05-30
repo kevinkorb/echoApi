@@ -1,12 +1,5 @@
 <?php
-require_once('config.php');
-
-function autoload($class){
-	$class_patch = str_replace('_', DIRECTORY_SEPARATOR, $class);
-	require_once($class_patch.".php");
-}
-
-spl_autoload_register('autoload');
+require_once('includes.php');
 
 /**
  * Get All Clients That Are Active
@@ -16,7 +9,6 @@ $GetClients = new Echo_GetClients();
 $response = $GetClients->all();
 $returnObj = json_decode($response);
 var_dump($returnObj);
-
 
 // die();
 /**
@@ -38,8 +30,8 @@ $AddList->addNumber(5555555555);
 $AddList->addNumber(6666666666);
 $response = $AddList->execute();
 
-$returnObj = json_decode($response);
-var_dump($returnObj);
+$listReturnObj = json_decode($response);
+var_dump($listReturnObj);
 
 /**
  * Create a new Broadcast Call
@@ -51,3 +43,16 @@ var_dump($returnObj);
  $AddCallJson = json_decode($addCallResponse);
  print_r($AddCallJson);
  
+ echo "\n\n\n Add Existing Caller ID Number\n\n\n";
+ $AddCallerId = new Echo_AddExistingCallerId("2172227777", $ClientData->id);
+ $result = $AddCallerId->execute();
+ $AddCallerIdResult = json_decode($result);
+ 
+ 
+ echo "\n\n\nCreate a new Schedule\n";
+ $AddSchedule = new Echo_AddSchedule($AddCallJson->data->id);
+ $AddSchedule->setCallScheduleDateAndTime(date("Y/m/d", time() + 86400), 0, 3, "PM", "15", 3, 'PM', 'CST');
+ $AddSchedule->addList($listReturnObj->data->id);
+ $AddSchedule->setCallerId($AddCallerIdResult->data->id);
+ $return = $AddSchedule->execute();
+ var_dump($return);
