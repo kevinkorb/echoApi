@@ -32,6 +32,10 @@ abstract class Echo_AddCall {
 		$this->addRecording('liveVoice', $filename);
 	}
 	
+	public function setInvalidMessage($filename){
+		$this->addRecording('invalidMessage', $filename);
+	}
+	
 	public function setAMMessage($filename){
 		$this->addRecording('answeringMachine', $filename);
 	}
