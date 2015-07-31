@@ -18,7 +18,7 @@ var_dump($returnObj);
 $AddClient = new Echo_AddClient('New Awesome Client');
 $response = $AddClient->execute();
 $returnObj = json_decode($response);
-var_dump($returnObj);
+//var_dump($returnObj);
 $ClientData = json_decode($returnObj->data);
 
 /**
@@ -31,28 +31,31 @@ $AddList->addNumber(6666666666);
 $response = $AddList->execute();
 
 $listReturnObj = json_decode($response);
-var_dump($listReturnObj);
+//var_dump($listReturnObj);
 
 /**
  * Create a new Broadcast Call
  */
  echo "\n\n\nAdd A New Call\n";
  $AddCall = new Echo_AddBroadcastCall('Test call from API', $ClientData->id);
- $AddCall->setCallTypeLiveVoiceAndAMSameMessage('recordings/chainsaw.wav');
+ $AddCall->setCallTypeLiveVoiceAndAMSameMessage('../recordings/chainsaw.wav');
  $addCallResponse = $AddCall->execute();
  $AddCallJson = json_decode($addCallResponse);
- print_r($AddCallJson);
- 
+// print_r($AddCallJson);
+
  echo "\n\n\n Add Existing Caller ID Number\n\n\n";
  $AddCallerId = new Echo_AddExistingCallerId("2172227777", $ClientData->id);
  $result = $AddCallerId->execute();
  $AddCallerIdResult = json_decode($result);
- 
- 
+
+//die("DONE");
+
+
  echo "\n\n\nCreate a new Schedule\n";
+
  $AddSchedule = new Echo_AddSchedule($AddCallJson->data->id);
- $AddSchedule->setCallScheduleDateAndTime(date("Y/m/d", time() + 86400), 0, 3, "PM", "15", 3, 'PM', 'CST');
+ $AddSchedule->setCallScheduleDateAndTime(date("Y/m/d", time() + 86400), 0, 3, "PM", "45", 3, 'PM', 'CST');
  $AddSchedule->addList($listReturnObj->data->id);
  $AddSchedule->setCallerId($AddCallerIdResult->data->id);
  $return = $AddSchedule->execute();
- var_dump($return);
+// var_dump($return);
