@@ -7,8 +7,24 @@ require_once('includes.php');
 echo "Get All Clients\n";
 $GetClients = new Echo_GetClients();
 $response = $GetClients->all();
+//echo $response;
 $returnObj = json_decode($response);
-var_dump($returnObj);
+//var_dump($returnObj);
+
+$singleObject = array_pop($returnObj->data);
+$clientId = $singleObject->id;
+
+$GetListsForClient = new Echo_GetPhoneListsForClient();
+$lists = $GetListsForClient->byClientId($clientId);
+var_dump($lists);
+die();
+
+
+/**
+ * Get all Phone lists for clients
+ */
+
+die();
 
 // die();
 /**
@@ -18,6 +34,7 @@ var_dump($returnObj);
 $AddClient = new Echo_AddClient('New Awesome Client');
 $response = $AddClient->execute();
 $returnObj = json_decode($response);
+echo $response;
 //var_dump($returnObj);
 $ClientData = json_decode($returnObj->data);
 
